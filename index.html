@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kings Cut Barbershop | Demo Website Build by • IG @webs_by.anuj</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark-grey: #1a1a1a;
+            --gold: #c9a84c;
+            --gold-hover: #e0bc5a;
+            --white: #ffffff;
+            --text-muted: #a0a0a0;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .logo {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1px;
+        }
+
+        /* --- Scroll Reveal Animation --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Navbar --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            padding: 15px 8%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .mobile-toggle {
+            display: none;
+            cursor: pointer;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=2074') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 18px 35px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-hover);
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(201, 168, 76, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* --- About Section --- */
+        section {
+            padding: 100px 10%;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--gold);
+            text-align: center;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: var(--dark-grey);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            color: var(--gold);
+        }
+
+        .stat-card p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Services Section --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--dark-grey);
+            padding: 50px 30px;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .service-price {
+            display: block;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- Gallery Section --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* --- Testimonials --- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--dark-grey);
+            padding: 40px;
+            border-radius: 4px;
+        }
+
+        .stars {
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 25px;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--black);
+            font-weight: 800;
+        }
+
+        /* --- Contact Section --- */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--gold);
+        }
+
+        .info-item {
+            margin-bottom: 25px;
+        }
+
+        .info-item h4 {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            background: var(--dark-grey);
+            border: 1px solid #333;
+            padding: 15px;
+            color: white;
+            font-family: inherit;
+        }
+
+        .contact-form input:focus, 
+        .contact-form textarea:focus {
+            border-color: var(--gold);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 10% 40px;
+            border-top: 1px solid #222;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-tagline {
+            color: var(--text-muted);
+            margin: 20px 0 40px;
+            font-style: italic;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .about-container, .contact-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 5%;
+            }
+            .nav-links {
+                display: none; /* Add JS to toggle this */
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">KINGS CUT</a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-toggle">☰</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1 class="reveal">Where Style Meets<br><span style="color: var(--gold);">Precision</span></h1>
+        <p class="reveal">Experience New York's premier grooming destination. We specialize in classic cuts and modern styles tailored to the modern gentleman.</p>
+        <div class="btn-group reveal">
+            <a href="#contact" class="btn btn-primary">Book Appointment</a>
+            <a href="#gallery" class="btn btn-secondary">See Our Work</a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-container">
+            <div class="about-text reveal">
+                <h2 class="section-title" style="text-align: left;">The Legacy</h2>
+                <p>Founded in the heart of Manhattan, Kings Cut Barbershop is more than just a place for a haircut. It's a sanctuary for the modern man who values excellence and tradition.</p>
+                <p>Our master barbers bring decades of combined experience, ensuring every chair session is a masterclass in craft. We don't just cut hair; we sculpt confidence.</p>
+                <a href="#services" class="btn btn-secondary">Explore Services</a>
+            </div>
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <h3>8+</h3>
+                    <p>Years Experience</p>
+                </div>
+                <div class="stat-card">
+                    <h3>500+</h3>
+                    <p>Happy Clients</p>
+                </div>
+                <div class="stat-card">
+                    <h3>15k</h3>
+                    <p>Cuts Completed</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5★</h3>
+                    <p>Rated on Yelp</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" style="background-color: #050505;">
+        <h2 class="section-title reveal">Premium Services</h2>
+        <div class="services-grid">
+            <!-- Service 1 -->
+            <div class="service-card reveal">
+                <div class="service-icon">✂️</div>
+                <span class="service-price">$30</span>
+                <h3>Signature Haircut</h3>
+                <p>A precision cut tailored to your face shape and hair type. Includes a complimentary straight razor neck shave.</p>
+            </div>
+            <!-- Service 2 -->
+            <div class="service-card reveal">
+                <div class="service-icon">🧔</div>
+                <span class="service-price">$20</span>
+                <h3>Beard Sculpting</h3>
+                <p>Shape and trim your beard to perfection. Includes beard oil application and line-up.</p>
+            </div>
+            <!-- Service 3 -->
+            <div class="service-card reveal">
+                <div class="service-icon">🧖‍♂️</div>
+                <span class="service-price">$35</span>
+                <h3>Hot Towel Shave</h3>
+                <p>The ultimate relaxation. Traditional straight razor shave with essential oils and hot towels.</p>
+            </div>
+            <!-- Service 4 -->
+            <div class="service-card reveal">
+                <div class="service-icon">👑</div>
+                <span class="service-price">$45</span>
+                <h3>The King's Combo</h3>
+                <p>Our most popular choice. Full signature haircut combined with professional beard grooming.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+   <!-- Gallery Section -->
+<section id="gallery">
+    <h2 class="section-title reveal">Our Craft</h2>
+    <div class="gallery-grid">
+        <!-- Image 1: Precision Haircut -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800" alt="Precision Haircut">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">VIEW CUT</span></div>
+        </div>
+        <!-- Image 2: Professional Tools -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=800" alt="Barber Tools">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">THE TOOLS</span></div>
+        </div>
+        <!-- Image 3: Shop Interior -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800" alt="Barber Shop Interior">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">INTERIOR</span></div>
+        </div>
+        <!-- Image 4: Beard Styling -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&q=80&w=800" alt="Beard Grooming">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">GROOMING</span></div>
+        </div>
+        <!-- Image 5: Hot Towel Shave -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?auto=format&fit=crop&q=80&w=800" alt="Hot Towel Shave">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">CLASSIC SHAVE</span></div>
+        </div>
+        <!-- Image 6: Close up Fade -->
+        <div class="gallery-item reveal">
+            <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?auto=format&fit=crop&q=80&w=800" alt="Close up Fade">
+            <div class="gallery-overlay"><span style="color: var(--gold); border: 1px solid var(--gold); padding: 10px;">PRECISION</span></div>
+        </div>
+    </div>
+</section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" style="background-color: #050505;">
+        <h2 class="section-title reveal">Client Stories</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card reveal">
+                <div class="stars">★★★★★</div>
+                <p>"Best fade I've ever had. The attention to detail is unmatched in New York. This is my permanent spot now."</p>
+                <div class="client-info">
+                    <div class="avatar">JD</div>
+                    <div>
+                        <strong>James Dalton</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Wall Street Analyst</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="stars">★★★★★</div>
+                <p>"The hot towel shave is a spiritual experience. Clean shop, great music, and professional barbers."</p>
+                <div class="client-info">
+                    <div class="avatar">MR</div>
+                    <div>
+                        <strong>Marcus Reed</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Graphic Designer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card reveal">
+                <div class="stars">★★★★★</div>
+                <p>"Premium atmosphere. You get what you pay for—top-tier service and a haircut that lasts."</p>
+                <div class="client-info">
+                    <div class="avatar">SL</div>
+                    <div>
+                        <strong>Steven Long</strong>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Entrepreneur</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="contact-container">
+            <div class="contact-info reveal">
+                <h2 class="section-title" style="text-align: left;">Visit The Throne</h2>
+                <div class="info-item">
+                    <h4>Location</h4>
+                    <p>123 Luxury Row, Manhattan<br>New York, NY 10001</p>
+                </div>
+                <div class="info-item">
+                    <h4>Hours</h4>
+                    <p>Mon - Fri: 9am - 8pm<br>Sat - Sun: 10am - 6pm</p>
+                </div>
+                <div class="info-item">
+                    <h4>Contact</h4>
+                    <p>Phone: (212) 555-0198<br>Email: hello@kingscut.com</p>
+                </div>
+            </div>
+            <form class="contact-form reveal">
+                <h3>Request a Chair</h3>
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <select style="background: var(--dark-grey); border: 1px solid #333; padding: 15px; color: white;">
+                    <option>Select Service</option>
+                    <option>Signature Haircut</option>
+                    <option>Beard Sculpting</option>
+                    <option>Hot Towel Shave</option>
+                </select>
+                <textarea rows="5" placeholder="Special Instructions"></textarea>
+                <button type="submit" class="btn btn-primary">Book Now</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <a href="#" class="footer-logo">KINGS CUT</a>
+        <p class="footer-tagline">Excellence in every strand since 2016.</p>
+        <div class="social-links">
+            <a href="#">INSTAGRAM</a>
+            <a href="#">FACEBOOK</a>
+            <a href="#">TWITTER</a>
+            <a href="#">YELP</a>
+        </div>
+        <p class="copyright">&copy; 2024 Kings Cut Barbershop. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Initial check on load
+        revealOnScroll();
+
+        // Simple Mobile Menu Toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            if(navLinks.style.display === 'flex') {
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'var(--black)';
+                navLinks.style.padding = '20px';
+                navLinks.style.borderBottom = '1px solid var(--gold)';
+            }
+        });
+    </script>
+</body>
+</html>
